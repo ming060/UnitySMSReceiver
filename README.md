@@ -1,6 +1,8 @@
 # UnitySMSReceiver
 A simple demo for receive SMS with Android plugin in Unity
 
+![sample](demo.gif)
+
 # Environment
 Unity 2017.2.0f3
 
