@@ -8,9 +8,7 @@ public class Hello : MonoBehaviour {
 		UnitySMSReceiver.OnSMSReceiveHandler += OnSMSReceive;
 	}
 	private void OnSMSReceive (object o, UnitySMSReceiver.SMSReceiveEventArgs arg) {
-		//Debug.Log (arg.Sender);
-		Debug.Log (arg.Message);
-		//Sender.text = "Sender：" + arg.Sender;
-		Message.text = "Message：" + arg.Message;
+        Sender.text = "Sender：" + arg.Sender;
+        Message.text = "Message：" + arg.Message;
 	}
 }

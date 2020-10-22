@@ -5,16 +5,12 @@ using UnityEngine;
 
 public class UnitySMSReceiver : MonoBehaviour {
 	public class SMSReceiveEventArgs : EventArgs {
-		//public String Sender { get; private set; }
-		public String Message { get; private set; }
-		public SMSReceiveEventArgs (string message) {
+		public string Sender { get; private set; }
+		public string Message { get; private set; }
+		public SMSReceiveEventArgs (string sender, string message) {
+			Sender = sender;
 			Message = message;
 		}
-		//public SMSReceiveEventArgs(string sender, string message)
-		//{
-		//	Sender = sender;
-		//	Message = message;
-		//}
 	}
 	private const string gameObjectName = "UnitySMSReceiver";
 	public static event EventHandler<SMSReceiveEventArgs> OnSMSReceiveHandler;
@@ -22,10 +18,12 @@ public class UnitySMSReceiver : MonoBehaviour {
 		this.gameObject.name = gameObjectName;
 	}
 	public void OnSMSReceive (string message) {
-		OnSMSReceiveHandler (null, new SMSReceiveEventArgs (message));
+		var data = JsonUtility.FromJson<SMSContainer>(message);
+		OnSMSReceiveHandler (null, new SMSReceiveEventArgs (data.S, data.M));
 	}
-	//public void OnSMSReceive(string sender, string message)
-	//{
-	//	OnSMSReceiveHandler(null, new SMSReceiveEventArgs(sender, message));
-	//}
+	public class SMSContainer
+	{
+		public string S;
+		public string M;
+	}
 }

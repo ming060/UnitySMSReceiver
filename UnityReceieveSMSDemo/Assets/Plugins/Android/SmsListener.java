@@ -4,7 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.telephony.SmsMessage;
-import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.unity3d.player.UnityPlayer;
 
@@ -18,17 +20,21 @@ public class SmsListener extends BroadcastReceiver {
 
         Object[] objects = (Object[]) intent.getExtras().get("pdus");
         SmsMessage message = SmsMessage.createFromPdu((byte[]) objects[0]);
-        /*
-        TODO replace UnityPlayer.UnitySendMessage function with AndroidJavaProxy callback
-        https://docs.unity3d.com/ScriptReference/AndroidJavaProxy.html
-        */
+
         String sender = message.getDisplayOriginatingAddress();
         for (int i = 0; i < objects.length; i++) {
             message = SmsMessage.createFromPdu((byte[]) objects[i]);
             builder.append(message.getDisplayMessageBody());
         }
-        Log.i("ming", sender);
-        Log.i("ming", builder.toString());
-        UnityPlayer.UnitySendMessage(UnityCallbackObject, UnityCallbackMethod, builder.toString());
+
+        JSONObject object = new JSONObject();
+        try {
+            object.put("S", sender);
+            object.put("M", builder.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        UnityPlayer.UnitySendMessage(UnityCallbackObject, UnityCallbackMethod, object.toString());
     }
 }
