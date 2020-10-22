@@ -15,3 +15,11 @@ Android Emulator
 CPU/ABI: Google Play Intel Atom (x86)
 
 Target: google_apis_playstore [Google Play] (API level 30)
+
+# Troubleshooting
+* Android app permission:
+    This demo project has not handle the SMS permission yet.
+    If you can't receive any message, check app permission first.
+* How to grant SMS permission?
+
+![SMS](pics/SMS_permission.gif)
